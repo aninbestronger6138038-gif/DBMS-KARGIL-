@@ -5,19 +5,31 @@ Design and Implementation of Sample Database System using DDL, DML and DCL
 👨‍🎓 Student Details
 
 Name: Anindita Dhar
+
 UID: 25MCA20259
+
 Branch: MCA(GENERAL)
+
 Semester: 2nd
+
 Section/Group: 1/A
+
 Subject: TECHNICAL TRAINING
+
 Date of Performance: 27/01/2026
 
+
 🎯 Aim
+
 To implement conditional decision-making logic in PostgreSQL using IF–ELSE constructs and CASE expressions for classification, validation, and rule-based data processing.
 
+
 💻 Software Requirements
+
 PostgreSQL (Database Server)
+
 pgAdmin
+
 Windows Operating System
 
 📌 Objective
