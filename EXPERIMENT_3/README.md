@@ -129,6 +129,7 @@ INSERT INTO Schema_Analysis VALUES(4,'Finance_Schema',1);
 ✏️ Step 3: View Table
 
 SELECT * FROM Schema_Analysis;
+<img width="1021" height="331" alt="image" src="https://github.com/user-attachments/assets/dbe0261d-791a-4ecc-9a64-e213e91e59c0" />
 
 
 🗑️ Step 4: Classifying data using a CASE expression
@@ -153,6 +154,7 @@ SELECT
     
 FROM Schema_Analysis;
 
+<img width="969" height="308" alt="image" src="https://github.com/user-attachments/assets/896ba5f5-a31d-45fb-96c1-91b39a18be40" />
 
 🔐 Step 5: Applying CASE Logic in Data Updates
 
@@ -171,6 +173,7 @@ SET Status = CASE
                ELSE 'REJECTED'
                
              END;
+<img width="890" height="300" alt="image" src="https://github.com/user-attachments/assets/3929f21f-6d2d-44a1-9c31-d0f0ba8377c9" />
 
 
 🏗️ Step 6:Implementing if-else logic using PL/SQL
@@ -199,6 +202,8 @@ BEGIN
     
 END $$;	
 
+<img width="1059" height="268" alt="image" src="https://github.com/user-attachments/assets/cb4ee76f-1217-49f7-9896-ae36e566c2c7" />
+
 
 🏗️ Step 7: Create a table to store student names and marks.
 
@@ -209,6 +214,8 @@ student_names VARCHAR (100),
 student_marks INT
 
 );
+
+
 
 
 🏗️ Step 8:Classify students into grades based on their marks using conditional logic.
@@ -287,6 +294,7 @@ BEGIN
 
 END $$;	
 
+<img width="1050" height="340" alt="image" src="https://github.com/user-attachments/assets/36621f7a-04f5-44c7-a6d5-877a8a97657b" />
 
 
 📸 Screenshots of execution and obtained results are attached.
