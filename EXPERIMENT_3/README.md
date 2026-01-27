@@ -33,32 +33,56 @@ pgAdmin
 Windows Operating System
 
 📌 Objective
+
 •	To understand conditional execution in SQL.
+
 •	To implement decision-making logic using CASE expressions.
+
 •	To simulate real-world rule validation scenarios.
+
 •	To classify data based on multiple conditions.
+
 •	To strengthen SQL logic skills required in interviews and backend systems.
+
 
 🛠️ Practical / Experiment Steps
 
+
 	Create a table that stores:
-•	A unique identifier
-•	A schema or entity name
-•	A numeric count representing violations or issues
-•	Populate the table with multiple records having different violation counts.
+
+        •	A unique identifier
+        
+        •	A schema or entity name
+        
+        •	A numeric count representing violations or issues
+        
+        •	Populate the table with multiple records having different violation counts.
+
+        
 	Classifying data using a CASE expression
-•	Retrieve schema names and their violation counts.
-•	Use conditional logic to classify each schema into categories such as:
-	No Violation
-	Minor Violation
-	Moderate Violation
-	 Critical Violation
-	Applying CASE Logic in Data Updates
+
+         •	Retrieve schema names and their violation counts.
+         
+         •	Use conditional logic to classify each schema into categories such as:
+         
+                     	No Violation
+
+                     	Minor Violation
+
+                    	Moderate Violation
+
+                    	 Critical Violation
+
+                    	Applying CASE Logic in Data Updates
+                    
 •	Add a new column to store approval status.
+
 •	Update this column based on violation count using conditional rules such as:
+
 a)	Approved
 b)	Needs Review
 c)	Rejected
+
 	Implementing if-else logic using PL/SQL
 •	Use a procedural block instead of a SELECT statement.
 •	Declare a variable representing violation count.
