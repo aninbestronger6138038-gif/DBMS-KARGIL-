@@ -23,30 +23,47 @@ To understand and implement iterative control structures in PostgreSQL conceptua
 
 🎯Objectives:
 •	To understand why iteration is required in database programming
+
 •	To learn the purpose and behaviour of FOR, WHILE, and LOOP constructs
+
 •	To understand how repeated data processing is handled in databases
+
 •	To relate loop concepts to real-world batch processing scenarios
+
 •	To strengthen conceptual knowledge of procedural SQL used in enterprise systems
 
+
 💻 Input/Apparatus Used:
+
 	PostgreSQL
+
 	pgAdmin
 
 Practical / Experiment Steps
+
 Pre-requisite Understanding
+
 • Students should first understand that iterative control structures are executed inside PL/pgSQL blocks, not in normal SQL queries
+
 • Students should create a table that stores multiple records so that loop execution over rows can be demonstrated
+
 • The table should contain:
+
 •	A unique identifier
+
 •	A descriptive attribute (such as name or category)
+
 •	A numeric value to be processed repeatedly
+
 
 Procedure/Algorithm/Code:
 
 i.	Start the system and log in to the computer.
+
 ii. Open PostgreSQL software.
 
 iii. Create a table using the DDL command.
+
 CREATE TABLE  Employees (
 emp_id SERIAL PRIMARY KEY,
 emp_name VARCHAR(100),
