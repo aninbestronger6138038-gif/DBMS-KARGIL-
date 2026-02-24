@@ -1,4 +1,4 @@
-DBMS Lab – Worksheet 1
+DBMS Lab – Worksheet 3
 
 Design and Implementation of Sample Database System using DDL, DML and DCL
 
