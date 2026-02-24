@@ -1,4 +1,4 @@
-DBMS Lab – Worksheet 1
+DBMS Lab – Worksheet 4
 
 To understand and implement iterative control structures in PostgreSQL 
 
