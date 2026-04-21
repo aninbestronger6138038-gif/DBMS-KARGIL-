@@ -1,0 +1,1938 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart City Management System</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      header {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        text-align: center;
+      }
+
+      h1 {
+        color: #667eea;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 1.2em;
+      }
+
+      .section {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        transition:
+          transform 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      .section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(31, 38, 135, 0.5);
+      }
+
+      .section h2 {
+        color: #667eea;
+        font-size: 1.8em;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .icon {
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 15px;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #555;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .btn-danger {
+        background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+      }
+
+      .btn-danger:hover {
+        box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+      }
+
+      .data-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .card {
+        background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+        border-radius: 16px;
+        padding: 20px;
+        border: 2px solid #e1e5e9;
+        transition: all 0.3s ease;
+      }
+
+      .card:hover {
+        border-color: #667eea;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+        transform: translateY(-3px);
+      }
+
+      .card h3 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 1.3em;
+      }
+
+      .card p {
+        margin-bottom: 8px;
+        line-height: 1.6;
+      }
+
+      .status {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 5px;
+      }
+
+      .status-reported {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+
+      .status-notified {
+        background: #fff3e0;
+        color: #f57c00;
+      }
+
+      .severity-low {
+        background: #e8f5e8;
+        color: #2e7d32;
+      }
+
+      .severity-medium {
+        background: #fff3e0;
+        color: #f57c00;
+      }
+
+      .severity-high {
+        background: #ffebee;
+        color: #c62828;
+      }
+
+      .alert-box {
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        font-weight: 500;
+      }
+
+      .alert-success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .auto-refresh-indicator {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(102, 126, 234, 0.9);
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        z-index: 1000;
+      }
+
+      .pulse {
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+        }
+      }
+
+      .energy-status-online {
+        background: #e8f5e8;
+        color: #2e7d32;
+      }
+
+      .energy-status-offline {
+        background: #ffebee;
+        color: #c62828;
+      }
+
+      .energy-status-maintenance {
+        background: #fff3e0;
+        color: #f57c00;
+      }
+
+      .consumption-high {
+        background: #ffebee;
+        color: #c62828;
+        font-weight: 600;
+      }
+
+      .consumption-medium {
+        background: #fff3e0;
+        color: #f57c00;
+        font-weight: 600;
+      }
+
+      .consumption-low {
+        background: #e8f5e8;
+        color: #2e7d32;
+        font-weight: 600;
+      }
+
+      .alert-resolved {
+        background: #e8f5e8;
+        color: #2e7d32;
+      }
+
+      .alert-active {
+        background: #ffebee;
+        color: #c62828;
+        animation: pulse 2s infinite;
+      }
+
+      .special-notification {
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        border-radius: 20px;
+        padding: 25px;
+        box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        min-width: 350px;
+        max-width: 400px;
+        animation: slideIn 0.5s ease-out;
+      }
+
+      .special-notification.critical {
+        border-left: 6px solid #f44336;
+        background: linear-gradient(
+          135deg,
+          rgba(244, 67, 54, 0.1),
+          rgba(255, 255, 255, 0.98)
+        );
+      }
+
+      .special-notification .notification-content h3 {
+        color: #f44336;
+        margin: 0 0 10px 0;
+        font-size: 1.2em;
+        font-weight: 700;
+      }
+
+      .special-notification .notification-content p {
+        color: #333;
+        margin: 0 0 15px 0;
+        line-height: 1.5;
+      }
+
+      .special-notification .notification-content button {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: #f44336;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .high-severity-card {
+        border-left: 5px solid #f44336;
+        background: linear-gradient(135deg, rgba(244, 67, 54, 0.05), #ffffff);
+      }
+
+      .auto-dispatch {
+        background: linear-gradient(135deg, #4caf50, #2e7d32);
+        color: white;
+        font-weight: 600;
+        animation: pulse 2s infinite;
+      }
+
+      .dispatch-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+      }
+
+      .modal-content {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        z-index: 1;
+        animation: modalSlideIn 0.3s ease-out;
+      }
+
+      .modal-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 20px 25px;
+        border-radius: 20px 20px 0 0;
+        position: relative;
+      }
+
+      .modal-header h2 {
+        margin: 0;
+        font-size: 1.4em;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: white;
+        font-size: 24px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.3s ease;
+      }
+
+      .close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .modal-body {
+        padding: 25px;
+      }
+
+      .dispatch-info {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .info-row {
+        padding: 12px;
+        background: #f8f9ff;
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .info-row strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      .modal-footer {
+        padding: 20px 25px;
+        text-align: center;
+        border-top: 1px solid #eee;
+      }
+
+      @keyframes modalSlideIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9) translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      .server-error-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(135deg, #f44336, #d32f2f);
+        color: white;
+        z-index: 10001;
+        padding: 20px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(244, 67, 54, 0.5);
+      }
+
+      .error-content h3 {
+        margin: 0 0 10px 0;
+        font-size: 1.3em;
+      }
+
+      .error-content p {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .error-content ul {
+        text-align: left;
+        display: inline-block;
+        margin: 10px 0;
+      }
+
+      .error-content ul li {
+        margin: 5px 0;
+        font-size: 13px;
+      }
+
+      .error-content code {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          padding: 10px;
+        }
+
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .data-grid {
+          grid-template-columns: 1fr;
+        }
+
+        h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🏙️ Smart City Management System</h1>
+        <p class="subtitle">
+          Integrated Traffic, Healthcare, and Security Monitoring
+        </p>
+      </header>
+
+      <div class="auto-refresh-indicator" id="refreshIndicator">
+        🔄 Auto-refresh: ON
+      </div>
+
+      <!-- Report Incident Section -->
+      <div class="section">
+        <h2><span class="icon">🚨</span>Report Traffic Incident</h2>
+        <div id="incidentAlert"></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="location">Location</label>
+            <select id="location">
+              <option value="Downtown Main St">Downtown Main St</option>
+              <option value="Uptown Bridge">Uptown Bridge</option>
+              <option value="Riverside Ave">Riverside Ave</option>
+              <option value="City Center">City Center</option>
+              <option value="North District">North District</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="severity">Severity</label>
+            <select id="severity">
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="reportedBy">Reported By</label>
+            <input
+              type="text"
+              id="reportedBy"
+              placeholder="e.g., Traffic Police Unit 1"
+            />
+          </div>
+        </div>
+        <button class="btn" onclick="reportIncident()">
+          <span id="reportBtnText">Report Incident</span>
+        </button>
+      </div>
+
+      <!-- Traffic Incidents Section -->
+      <div class="section">
+        <h2><span class="icon">🚦</span>Traffic Incidents</h2>
+        <button
+          class="btn"
+          onclick="loadIncidents()"
+          style="margin-bottom: 20px"
+        >
+          <span id="incidentsBtnText">Refresh Incidents</span>
+        </button>
+        <div id="incidentsContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Healthcare Alerts Section -->
+      <div class="section">
+        <h2><span class="icon">🏥</span>Healthcare Alerts</h2>
+        <button
+          class="btn"
+          onclick="loadHealthAlerts()"
+          style="margin-bottom: 20px"
+        >
+          <span id="healthBtnText">Refresh Health Alerts</span>
+        </button>
+        <div id="healthAlertsContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Security Alerts Section -->
+      <div class="section">
+        <h2><span class="icon">🔒</span>Security Alerts</h2>
+        <button
+          class="btn"
+          onclick="loadSecurityAlerts()"
+          style="margin-bottom: 20px"
+        >
+          <span id="securityBtnText">Refresh Security Alerts</span>
+        </button>
+        <div id="securityAlertsContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Hospitals Section -->
+      <div class="section">
+        <h2><span class="icon">🏨</span>Available Hospitals</h2>
+        <button
+          class="btn"
+          onclick="loadHospitals()"
+          style="margin-bottom: 20px"
+        >
+          <span id="hospitalsBtnText">Refresh Hospitals</span>
+        </button>
+        <div id="hospitalsContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Dispatch Log Section -->
+      <div class="section">
+        <h2><span class="icon">🚑</span>Ambulance Dispatch Log</h2>
+        <button
+          class="btn"
+          onclick="loadDispatchLog()"
+          style="margin-bottom: 20px"
+        >
+          <span id="dispatchBtnText">Refresh Dispatch Log</span>
+        </button>
+        <div id="dispatchLogContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Energy Monitoring Section -->
+      <div class="section">
+        <h2><span class="icon">⚡</span>Energy Monitoring</h2>
+
+        <!-- Simulation Controls -->
+        <div
+          class="simulation-panel"
+          style="
+            background: linear-gradient(135deg, #fff3e0, #ffffff);
+            border: 2px solid #ff9800;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+          "
+        >
+          <h3 style="color: #f57c00; margin-bottom: 15px">
+            🎮 Power System Simulation
+          </h3>
+          <p style="color: #666; margin-bottom: 15px; font-size: 14px">
+            <strong>How it works in real life:</strong> IoT sensors, smart
+            meters, and network monitoring automatically detect when devices go
+            online/offline. <br /><strong>For demonstration:</strong> Use these
+            controls to simulate real-world power events.
+          </p>
+
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="simulationLocation">Location</label>
+              <select id="simulationLocation">
+                <option value="Downtown Main St">Downtown Main St</option>
+                <option value="Uptown Bridge">Uptown Bridge</option>
+                <option value="Riverside Ave">Riverside Ave</option>
+                <option value="City Center">City Center</option>
+                <option value="North District">North District</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Simulation Actions</label>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap">
+                <button
+                  class="btn btn-danger"
+                  onclick="simulatePowerOutage()"
+                  style="font-size: 14px"
+                >
+                  🔴 Simulate Outage
+                </button>
+                <button
+                  class="btn"
+                  onclick="simulatePowerRestore()"
+                  style="
+                    background: linear-gradient(135deg, #4caf50, #2e7d32);
+                    font-size: 14px;
+                  "
+                >
+                  🟢 Restore Power
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button
+          class="btn"
+          onclick="loadEnergyMonitoring()"
+          style="margin-bottom: 20px"
+        >
+          <span id="energyBtnText">Refresh Energy Data</span>
+        </button>
+        <div id="energyMonitoringContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Energy Alerts Section -->
+      <div class="section">
+        <h2><span class="icon">🔋</span>Energy Alerts</h2>
+        <div id="energyAlertForm" style="margin-bottom: 20px">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="alertLocation">Location</label>
+              <input
+                type="text"
+                id="alertLocation"
+                placeholder="e.g., Downtown Main St"
+              />
+            </div>
+            <div class="form-group">
+              <label for="alertType">Alert Type</label>
+              <select id="alertType">
+                <option value="Power_Outage">Power Outage</option>
+                <option value="High_Consumption">High Consumption</option>
+                <option value="Equipment_Failure">Equipment Failure</option>
+                <option value="Emergency_Backup_Active">
+                  Emergency Backup Active
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="alertSeverity">Severity</label>
+              <select id="alertSeverity">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Critical">Critical</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="alertMessage">Message</label>
+              <input
+                type="text"
+                id="alertMessage"
+                placeholder="Describe the energy issue"
+              />
+            </div>
+          </div>
+          <button class="btn" onclick="createEnergyAlert()">
+            <span id="createEnergyAlertBtnText">Create Energy Alert</span>
+          </button>
+        </div>
+        <button
+          class="btn"
+          onclick="loadEnergyAlerts()"
+          style="margin-bottom: 20px"
+        >
+          <span id="energyAlertsBtnText">Refresh Energy Alerts</span>
+        </button>
+        <div id="energyAlertsContainer" class="data-grid"></div>
+      </div>
+
+      <!-- Energy Consumption Section -->
+      <div class="section">
+        <h2><span class="icon">📊</span>Energy Consumption Summary</h2>
+        <button
+          class="btn"
+          onclick="loadEnergyConsumption()"
+          style="margin-bottom: 20px"
+        >
+          <span id="energyConsumptionBtnText">Refresh Consumption Data</span>
+        </button>
+        <div id="energyConsumptionContainer" class="data-grid"></div>
+      </div>
+    </div>
+
+    <script>
+      // Global variables
+      let autoRefreshInterval;
+      let isAutoRefreshActive = true;
+
+      // API Base URL
+      const API_BASE = "/api";
+
+      // Initialize the application
+      document.addEventListener("DOMContentLoaded", function () {
+        checkServerStatus();
+        loadAllData();
+        startAutoRefresh();
+        updateRefreshIndicator();
+      });
+
+      // Check if Flask server is running
+      async function checkServerStatus() {
+        try {
+          const response = await fetch(`${API_BASE}/incidents`);
+          if (response.ok) {
+            console.log("✅ Server connection successful");
+            return true;
+          } else {
+            console.error("❌ Server responded with error:", response.status);
+            showServerError();
+            return false;
+          }
+        } catch (error) {
+          console.error("❌ Server connection failed:", error);
+          showServerError();
+          return false;
+        }
+      }
+
+      // Show server connection error
+      function showServerError() {
+        const errorBanner = document.createElement("div");
+        errorBanner.className = "server-error-banner";
+        errorBanner.innerHTML = `
+                <div class="error-content">
+                    <h3>⚠️ Server Connection Issue</h3>
+                    <p>Unable to connect to Flask server at 127.0.0.1:5000</p>
+                    <p><strong>Solutions:</strong></p>
+                    <ul>
+                        <li>Make sure Flask server is running: <code>python app.py</code></li>
+                        <li>Check if port 5000 is available</li>
+                        <li>Verify database connections are working</li>
+                    </ul>
+                    <button onclick="location.reload()" class="btn">🔄 Retry Connection</button>
+                </div>
+            `;
+        document.body.appendChild(errorBanner);
+      }
+
+      // Auto-refresh functionality
+      function startAutoRefresh() {
+        if (autoRefreshInterval) {
+          clearInterval(autoRefreshInterval);
+        }
+
+        autoRefreshInterval = setInterval(() => {
+          if (isAutoRefreshActive) {
+            loadHealthAlerts();
+            loadSecurityAlerts();
+            updateRefreshIndicator();
+          }
+        }, 5000); // Refresh every 5 seconds
+      }
+
+      function updateRefreshIndicator() {
+        const indicator = document.getElementById("refreshIndicator");
+        if (isAutoRefreshActive) {
+          indicator.textContent = "🔄 Auto-refresh: ON";
+          indicator.classList.add("pulse");
+        } else {
+          indicator.textContent = "⏸️ Auto-refresh: OFF";
+          indicator.classList.remove("pulse");
+        }
+      }
+
+      // Load all data on page load
+      function loadAllData() {
+        loadIncidents();
+        loadHealthAlerts();
+        loadSecurityAlerts();
+        loadHospitals();
+        loadDispatchLog();
+        loadEnergyMonitoring();
+        loadEnergyAlerts();
+        loadEnergyConsumption();
+      }
+
+      // Show alert messages
+      function showAlert(containerId, message, type = "success") {
+        const container = document.getElementById(containerId);
+        const alertClass = type === "success" ? "alert-success" : "alert-error";
+        container.innerHTML = `<div class="alert-box ${alertClass}">${message}</div>`;
+
+        setTimeout(() => {
+          container.innerHTML = "";
+        }, 5000);
+      }
+
+      // Set loading state for buttons
+      function setLoadingState(buttonId, isLoading) {
+        const button = document.getElementById(buttonId);
+        const originalText = button.textContent;
+
+        if (isLoading) {
+          button.innerHTML = '<span class="loading"></span> Loading...';
+          button.disabled = true;
+        } else {
+          button.innerHTML = originalText;
+          button.disabled = false;
+        }
+      }
+
+      // Report new incident with auto-dispatch feedback
+      async function reportIncident() {
+        const location = document.getElementById("location").value.trim();
+        const severity = document.getElementById("severity").value;
+        const reportedBy = document.getElementById("reportedBy").value.trim();
+
+        if (!location || !reportedBy) {
+          showAlert(
+            "incidentAlert",
+            "Please fill in all required fields.",
+            "error",
+          );
+          return;
+        }
+
+        setLoadingState("reportBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/incident`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              location: location,
+              severity: severity,
+              reported_by: reportedBy,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            // Show different messages based on severity and auto-dispatch
+            let alertMessage = data.message;
+            let alertType = "success";
+
+            if (severity === "High") {
+              if (data.auto_dispatch && data.auto_dispatch.dispatched) {
+                alertMessage += `\n\n🚑 AUTO-DISPATCH SUCCESSFUL:\n• Hospital: ${data.auto_dispatch.hospital_name}\n• Location: ${data.auto_dispatch.hospital_location}\n• Dispatch ID: #${data.auto_dispatch.dispatch_id}`;
+
+                // Show special notification
+                showSpecialNotification(
+                  "🚨 EMERGENCY RESPONSE ACTIVATED",
+                  `Ambulance dispatched to ${data.auto_dispatch.hospital_name}`,
+                  "critical",
+                );
+              } else if (data.auto_dispatch && !data.auto_dispatch.dispatched) {
+                alertMessage += `\n\n⚠️ AUTO-DISPATCH FAILED:\n• Reason: ${data.auto_dispatch.reason}\n• Manual dispatch required!`;
+                alertType = "error";
+
+                // Show critical alert
+                showSpecialNotification(
+                  "🚨 CRITICAL ALERT",
+                  "No ambulances available - Manual intervention required!",
+                  "critical",
+                );
+              }
+            }
+
+            showAlert("incidentAlert", alertMessage, alertType);
+
+            // Clear form
+            document.getElementById("location").value = "";
+            document.getElementById("reportedBy").value = "";
+            document.getElementById("severity").value = "Low";
+
+            // Immediately refresh all data
+            setTimeout(() => {
+              loadAllData();
+            }, 1000);
+          } else {
+            showAlert(
+              "incidentAlert",
+              data.error || "Failed to report incident.",
+              "error",
+            );
+          }
+        } catch (error) {
+          showAlert(
+            "incidentAlert",
+            "Network error occurred. Please try again.",
+            "error",
+          );
+          console.error("Error reporting incident:", error);
+        }
+
+        setLoadingState("reportBtnText", false);
+      }
+
+      // Show special notification for critical alerts
+      function showSpecialNotification(title, message, type = "info") {
+        // Create notification element
+        const notification = document.createElement("div");
+        notification.className = `special-notification ${type}`;
+
+        let iconColor = "#667eea";
+        let bgGradient = "rgba(102, 126, 234, 0.1), rgba(255, 255, 255, 0.98)";
+        let borderColor = "#667eea";
+
+        if (type === "critical") {
+          iconColor = "#f44336";
+          bgGradient = "rgba(244, 67, 54, 0.1), rgba(255, 255, 255, 0.98)";
+          borderColor = "#f44336";
+        } else if (type === "success") {
+          iconColor = "#4caf50";
+          bgGradient = "rgba(76, 175, 80, 0.1), rgba(255, 255, 255, 0.98)";
+          borderColor = "#4caf50";
+        }
+
+        notification.style.background = `linear-gradient(135deg, ${bgGradient})`;
+        notification.style.borderLeft = `6px solid ${borderColor}`;
+
+        notification.innerHTML = `
+                <div class="notification-content">
+                    <h3 style="color: ${iconColor};">${title}</h3>
+                    <p>${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" style="background: ${iconColor};">×</button>
+                </div>
+            `;
+
+        // Add to page
+        document.body.appendChild(notification);
+
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+          if (notification.parentElement) {
+            notification.remove();
+          }
+        }, 8000);
+      }
+
+      // Load traffic incidents
+      async function loadIncidents() {
+        setLoadingState("incidentsBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/incidents`);
+          const data = await response.json();
+
+          const container = document.getElementById("incidentsContainer");
+
+          if (response.ok && data.incidents) {
+            if (data.incidents.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No incidents reported yet.</p>';
+            } else {
+              container.innerHTML = data.incidents
+                .map((incident) => {
+                  // Check if this is a high severity incident with auto-dispatch
+                  const isHighSeverity = incident.severity === "High";
+                  const isNotified = incident.status === "Notified";
+
+                  return `
+                            <div class="card ${isHighSeverity ? "high-severity-card" : ""}">
+                                <h3>Incident #${incident.incident_id} ${isHighSeverity ? "🚨" : ""}</h3>
+                                <p><strong>Location:</strong> ${incident.location}</p>
+                                <p><strong>Reported By:</strong> ${incident.reported_by}</p>
+                                <p><strong>Time:</strong> ${new Date(incident.incident_time).toLocaleString()}</p>
+                                <div style="margin-top: 10px;">
+                                    <span class="status severity-${incident.severity.toLowerCase()}">${incident.severity} Severity</span>
+                                    <span class="status status-${incident.status.toLowerCase()}">${incident.status}</span>
+                                    ${isHighSeverity && isNotified ? '<span class="status auto-dispatch">🚑 Auto-Dispatch</span>' : ""}
+                                </div>
+                                <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                                    ${
+                                      !isHighSeverity || !isNotified
+                                        ? `
+                                        <button class="btn" onclick="dispatchAmbulance(${incident.incident_id})">
+                                            🚑 Dispatch Ambulance
+                                        </button>
+                                    `
+                                        : `
+                                        <button class="btn" onclick="showDispatchStatus(${incident.incident_id})" style="background: linear-gradient(135deg, #4caf50, #2e7d32);">
+                                            ✅ View Auto-Dispatch
+                                        </button>
+                                    `
+                                    }
+                                    <button class="btn btn-danger" onclick="deleteIncident(${incident.incident_id})">
+                                        🗑️ Delete
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                })
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load incidents.</p>';
+          }
+        } catch (error) {
+          document.getElementById("incidentsContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading incidents:", error);
+        }
+
+        setLoadingState("incidentsBtnText", false);
+      }
+
+      // Load healthcare alerts
+      async function loadHealthAlerts() {
+        setLoadingState("healthBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/healthalerts`);
+          const data = await response.json();
+
+          const container = document.getElementById("healthAlertsContainer");
+
+          if (response.ok && data.alerts) {
+            if (data.alerts.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No health alerts yet.</p>';
+            } else {
+              container.innerHTML = data.alerts
+                .map(
+                  (alert) => `
+                            <div class="card">
+                                <h3>Health Alert #${alert.alert_id}</h3>
+                                <p><strong>Incident ID:</strong> ${alert.incident_id}</p>
+                                <p><strong>Location:</strong> ${alert.incident_location}</p>
+                                <p><strong>Message:</strong> ${alert.message}</p>
+                                <p><strong>Time:</strong> ${new Date(alert.alert_time).toLocaleString()}</p>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load health alerts.</p>';
+          }
+        } catch (error) {
+          document.getElementById("healthAlertsContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading health alerts:", error);
+        }
+
+        setLoadingState("healthBtnText", false);
+      }
+
+      // Load security alerts
+      async function loadSecurityAlerts() {
+        setLoadingState("securityBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/securityalerts`);
+          const data = await response.json();
+
+          const container = document.getElementById("securityAlertsContainer");
+
+          if (response.ok && data.alerts) {
+            if (data.alerts.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No security alerts yet.</p>';
+            } else {
+              container.innerHTML = data.alerts
+                .map(
+                  (alert) => `
+                            <div class="card">
+                                <h3>Security Alert #${alert.alert_id}</h3>
+                                <p><strong>Incident ID:</strong> ${alert.incident_id}</p>
+                                <p><strong>Location:</strong> ${alert.incident_location}</p>
+                                <p><strong>Message:</strong> ${alert.message}</p>
+                                <p><strong>Time:</strong> ${new Date(alert.alert_time).toLocaleString()}</p>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load security alerts.</p>';
+          }
+        } catch (error) {
+          document.getElementById("securityAlertsContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading security alerts:", error);
+        }
+
+        setLoadingState("securityBtnText", false);
+      }
+
+      // Load hospitals
+      async function loadHospitals() {
+        setLoadingState("hospitalsBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/hospitals`);
+          const data = await response.json();
+
+          const container = document.getElementById("hospitalsContainer");
+
+          if (response.ok && data.hospitals) {
+            if (data.hospitals.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No hospitals found.</p>';
+            } else {
+              container.innerHTML = data.hospitals
+                .map(
+                  (hospital) => `
+                            <div class="card">
+                                <h3>${hospital.name}</h3>
+                                <p><strong>Location:</strong> ${hospital.location}</p>
+                                <p><strong>Available Beds:</strong> 
+                                    <span style="font-weight: 600; color: ${hospital.available_beds > 10 ? "#4caf50" : hospital.available_beds > 0 ? "#ff9800" : "#f44336"};">
+                                        ${hospital.available_beds}
+                                    </span>
+                                </p>
+                                <p><strong>Last Update:</strong> ${new Date(hospital.last_update).toLocaleString()}</p>
+                                <div style="margin-top: 10px;">
+                                    <span class="status ${hospital.available_beds > 0 ? "status-reported" : "alert-error"}" style="display: inline-block;">
+                                        ${hospital.available_beds > 0 ? "✅ Available" : "❌ Full"}
+                                    </span>
+                                </div>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load hospitals.</p>';
+          }
+        } catch (error) {
+          document.getElementById("hospitalsContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading hospitals:", error);
+        }
+
+        setLoadingState("hospitalsBtnText", false);
+      }
+
+      // Load dispatch log
+      async function loadDispatchLog() {
+        setLoadingState("dispatchBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/dispatch_log`);
+          const data = await response.json();
+
+          const container = document.getElementById("dispatchLogContainer");
+
+          if (response.ok && data.dispatch_logs) {
+            if (data.dispatch_logs.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No ambulance dispatches yet.</p>';
+            } else {
+              container.innerHTML = data.dispatch_logs
+                .map(
+                  (log) => `
+                            <div class="card">
+                                <h3>Dispatch #${log.log_id}</h3>
+                                <p><strong>Incident ID:</strong> ${log.incident_id}</p>
+                                <p><strong>Hospital:</strong> ${log.hospital_name}</p>
+                                <p><strong>Hospital Location:</strong> ${log.hospital_location}</p>
+                                <p><strong>Incident Location:</strong> ${log.incident_location}</p>
+                                <p><strong>Incident Severity:</strong> 
+                                    <span class="status severity-${log.severity.toLowerCase()}">${log.severity}</span>
+                                </p>
+                                <p><strong>Dispatch Time:</strong> ${new Date(log.dispatch_time).toLocaleString()}</p>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load dispatch log.</p>';
+          }
+        } catch (error) {
+          document.getElementById("dispatchLogContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading dispatch log:", error);
+        }
+
+        setLoadingState("dispatchBtnText", false);
+      }
+
+      // Dispatch ambulance for incident
+      async function dispatchAmbulance(incidentId) {
+        if (
+          !confirm(
+            `Are you sure you want to dispatch an ambulance for incident #${incidentId}?`,
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/dispatch/${incidentId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({}),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(
+              `✅ ${data.message}\nHospital: ${data.hospital.name}\nLocation: ${data.hospital.location}`,
+            );
+
+            // Refresh hospitals and dispatch log
+            loadHospitals();
+            loadDispatchLog();
+          } else {
+            alert(`❌ Dispatch failed: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred while dispatching ambulance.");
+          console.error("Error dispatching ambulance:", error);
+        }
+      }
+
+      // Delete incident
+      async function deleteIncident(incidentId) {
+        if (
+          !confirm(
+            `Are you sure you want to delete incident #${incidentId}? This will restore any allocated hospital beds.`,
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/incident/${incidentId}`, {
+            method: "DELETE",
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert(
+              "✅ Incident deleted successfully. Hospital beds have been restored.",
+            );
+
+            // Refresh all data
+            loadAllData();
+          } else {
+            alert(`❌ Delete failed: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred while deleting incident.");
+          console.error("Error deleting incident:", error);
+        }
+      }
+
+      // Toggle auto-refresh
+      function toggleAutoRefresh() {
+        isAutoRefreshActive = !isAutoRefreshActive;
+        updateRefreshIndicator();
+
+        if (!isAutoRefreshActive) {
+          clearInterval(autoRefreshInterval);
+        } else {
+          startAutoRefresh();
+        }
+      }
+
+      // Add click event to refresh indicator to toggle auto-refresh
+      document.addEventListener("DOMContentLoaded", function () {
+        document
+          .getElementById("refreshIndicator")
+          .addEventListener("click", toggleAutoRefresh);
+      });
+
+      // Handle keyboard shortcuts
+      document.addEventListener("keydown", function (event) {
+        // Ctrl+R or F5 - Refresh all data
+        if ((event.ctrlKey && event.key === "r") || event.key === "F5") {
+          event.preventDefault();
+          loadAllData();
+        }
+
+        // Ctrl+Space - Toggle auto-refresh
+        if (event.ctrlKey && event.key === " ") {
+          event.preventDefault();
+          toggleAutoRefresh();
+        }
+      });
+
+      // Handle page visibility change to pause/resume auto-refresh
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) {
+          clearInterval(autoRefreshInterval);
+        } else if (isAutoRefreshActive) {
+          startAutoRefresh();
+        }
+      });
+
+      // Load energy monitoring data
+      async function loadEnergyMonitoring() {
+        setLoadingState("energyBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_monitoring`);
+          const data = await response.json();
+
+          const container = document.getElementById(
+            "energyMonitoringContainer",
+          );
+
+          if (response.ok && data.energy_data) {
+            if (data.energy_data.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No energy monitoring data available.</p>';
+            } else {
+              container.innerHTML = data.energy_data
+                .map(
+                  (item) => `
+                            <div class="card">
+                                <h3>${item.device_type.replace("_", " ")} - ${item.location}</h3>
+                                <p><strong>Energy Usage:</strong> ${item.energy_usage} kWh</p>
+                                <p><strong>Power Status:</strong> 
+                                    <span class="status ${item.power_status === "Online" ? "severity-low" : item.power_status === "Offline" ? "severity-high" : "severity-medium"}">
+                                        ${item.power_status}
+                                    </span>
+                                </p>
+                                <p><strong>Last Update:</strong> ${new Date(item.timestamp).toLocaleString()}</p>
+                                <div style="margin-top: 10px;">
+                                    <span class="status status-reported">ID: ${item.monitor_id}</span>
+                                </div>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load energy monitoring data.</p>';
+          }
+        } catch (error) {
+          document.getElementById("energyMonitoringContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading energy monitoring data:", error);
+        }
+
+        setLoadingState("energyBtnText", false);
+      }
+
+      // Load energy alerts
+      async function loadEnergyAlerts() {
+        setLoadingState("energyAlertsBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_alerts`);
+          const data = await response.json();
+
+          const container = document.getElementById("energyAlertsContainer");
+
+          if (response.ok && data.energy_alerts) {
+            if (data.energy_alerts.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No energy alerts available.</p>';
+            } else {
+              container.innerHTML = data.energy_alerts
+                .map(
+                  (alert) => `
+                            <div class="card">
+                                <h3>${alert.alert_type.replace("_", " ")} Alert #${alert.alert_id}</h3>
+                                <p><strong>Location:</strong> ${alert.location}</p>
+                                <p><strong>Message:</strong> ${alert.message}</p>
+                                <p><strong>Severity:</strong> 
+                                    <span class="status severity-${alert.severity.toLowerCase()}">${alert.severity}</span>
+                                </p>
+                                <p><strong>Status:</strong> 
+                                    <span class="status ${alert.resolved ? "severity-low" : "severity-high"}">
+                                        ${alert.resolved ? "Resolved" : "Active"}
+                                    </span>
+                                </p>
+                                <p><strong>Alert Time:</strong> ${new Date(alert.alert_time).toLocaleString()}</p>
+                                ${alert.resolved_time ? `<p><strong>Resolved Time:</strong> ${new Date(alert.resolved_time).toLocaleString()}</p>` : ""}
+                                ${alert.incident_id ? `<p><strong>Related Incident:</strong> #${alert.incident_id}</p>` : ""}
+                                <div style="margin-top: 15px;">
+                                    ${
+                                      !alert.resolved
+                                        ? `
+                                        <button class="btn" onclick="resolveEnergyAlert(${alert.alert_id})">
+                                            ✅ Resolve Alert
+                                        </button>
+                                    `
+                                        : ""
+                                    }
+                                </div>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load energy alerts.</p>';
+          }
+        } catch (error) {
+          document.getElementById("energyAlertsContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading energy alerts:", error);
+        }
+
+        setLoadingState("energyAlertsBtnText", false);
+      }
+
+      // Load energy consumption data
+      async function loadEnergyConsumption() {
+        setLoadingState("energyConsumptionBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_consumption`);
+          const data = await response.json();
+
+          const container = document.getElementById(
+            "energyConsumptionContainer",
+          );
+
+          if (response.ok && data.consumption_data) {
+            if (data.consumption_data.length === 0) {
+              container.innerHTML =
+                '<p style="text-align: center; color: #666;">No energy consumption data available.</p>';
+            } else {
+              container.innerHTML = data.consumption_data
+                .map(
+                  (item) => `
+                            <div class="card">
+                                <h3>${item.location} - ${new Date(item.date).toLocaleDateString()}</h3>
+                                <p><strong>Total Consumption:</strong> ${item.total_consumption} kWh</p>
+                                <p><strong>Average Consumption:</strong> ${item.average_consumption} kWh</p>
+                                <p><strong>Peak Hour:</strong> ${item.peak_hour} (${item.peak_hour_consumption} kWh)</p>
+                                <p><strong>Estimated Cost:</strong> ${item.cost_estimate}</p>
+                                <div style="margin-top: 10px;">
+                                    <span class="status ${item.total_consumption > 50 ? "severity-high" : item.total_consumption > 30 ? "severity-medium" : "severity-low"}">
+                                        ${item.total_consumption > 50 ? "High Usage" : item.total_consumption > 30 ? "Medium Usage" : "Low Usage"}
+                                    </span>
+                                </div>
+                            </div>
+                        `,
+                )
+                .join("");
+            }
+          } else {
+            container.innerHTML =
+              '<p style="color: #f44336;">Failed to load energy consumption data.</p>';
+          }
+        } catch (error) {
+          document.getElementById("energyConsumptionContainer").innerHTML =
+            '<p style="color: #f44336;">Network error occurred.</p>';
+          console.error("Error loading energy consumption data:", error);
+        }
+
+        setLoadingState("energyConsumptionBtnText", false);
+      }
+
+      // Create energy alert
+      async function createEnergyAlert() {
+        const location = document.getElementById("alertLocation").value.trim();
+        const alertType = document.getElementById("alertType").value;
+        const severity = document.getElementById("alertSeverity").value;
+        const message = document.getElementById("alertMessage").value.trim();
+
+        if (!location || !message) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+
+        setLoadingState("createEnergyAlertBtnText", true);
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_alert`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              location: location,
+              alert_type: alertType,
+              message: message,
+              severity: severity,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("✅ Energy alert created successfully!");
+
+            // Clear form
+            document.getElementById("alertLocation").value = "";
+            document.getElementById("alertMessage").value = "";
+
+            // Refresh energy alerts
+            loadEnergyAlerts();
+          } else {
+            alert(`❌ Failed to create energy alert: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred while creating energy alert.");
+          console.error("Error creating energy alert:", error);
+        }
+
+        setLoadingState("createEnergyAlertBtnText", false);
+      }
+
+      // Resolve energy alert
+      async function resolveEnergyAlert(alertId) {
+        if (
+          !confirm(`Are you sure you want to resolve energy alert #${alertId}?`)
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(
+            `${API_BASE}/energy_alert/${alertId}/resolve`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({}),
+            },
+          );
+
+          const data = await response.json();
+
+          if (response.ok) {
+            alert("✅ Energy alert resolved successfully!");
+            loadEnergyAlerts();
+          } else {
+            alert(`❌ Failed to resolve energy alert: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred while resolving energy alert.");
+          console.error("Error resolving energy alert:", error);
+        }
+      }
+
+      // Simulate power outage
+      async function simulatePowerOutage() {
+        const location = document.getElementById("simulationLocation").value;
+
+        if (
+          !confirm(
+            `🚨 Simulate a power outage in "${location}"?\n\nThis will:\n• Set all devices to OFFLINE status\n• Generate critical alerts\n• Demonstrate emergency response`,
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_simulate/outage`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              location: location,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showSpecialNotification(
+              "🚨 POWER OUTAGE SIMULATED",
+              `${data.affected_devices} devices offline in ${location}`,
+              "critical",
+            );
+
+            // Refresh all energy data
+            setTimeout(() => {
+              loadEnergyMonitoring();
+              loadEnergyAlerts();
+            }, 1000);
+          } else {
+            alert(`❌ Simulation failed: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred during simulation.");
+          console.error("Error simulating power outage:", error);
+        }
+      }
+
+      // Simulate power restoration
+      async function simulatePowerRestore() {
+        const location = document.getElementById("simulationLocation").value;
+
+        if (
+          !confirm(
+            `✅ Restore power in "${location}"?\n\nThis will:\n• Set all devices back to ONLINE\n• Generate restoration alerts\n• Resolve outage alerts`,
+          )
+        ) {
+          return;
+        }
+
+        try {
+          const response = await fetch(`${API_BASE}/energy_simulate/restore`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              location: location,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showSpecialNotification(
+              "✅ POWER RESTORED",
+              `${data.restored_devices} devices back online in ${location}`,
+              "success",
+            );
+
+            // Refresh all energy data
+            setTimeout(() => {
+              loadEnergyMonitoring();
+              loadEnergyAlerts();
+            }, 1000);
+          } else {
+            alert(`❌ Restoration failed: ${data.error}`);
+          }
+        } catch (error) {
+          alert("❌ Network error occurred during restoration.");
+          console.error("Error restoring power:", error);
+        }
+      }
+
+      // Show dispatch status for auto-dispatched incidents - SIMPLIFIED VERSION
+      async function showDispatchStatus(incidentId) {
+        try {
+          // Show loading state
+          const button = event.target;
+          const originalText = button.innerHTML;
+          button.innerHTML = '<span class="loading"></span> Loading...';
+          button.disabled = true;
+
+          console.log(`Fetching dispatch info for incident ${incidentId}`);
+
+          // Try the specific endpoint first
+          let response, data;
+          try {
+            response = await fetch(`${API_BASE}/dispatch_log/${incidentId}`);
+            data = await response.json();
+            console.log("Dispatch API response:", data);
+          } catch (fetchError) {
+            console.error("Fetch error:", fetchError);
+            throw new Error("Network error: Unable to connect to server");
+          }
+
+          if (
+            response.ok &&
+            data.dispatch_info &&
+            data.dispatch_info.length > 0
+          ) {
+            const dispatch = data.dispatch_info[0];
+            showDispatchModal(dispatch);
+          } else {
+            // Fall back to checking all dispatch logs
+            console.log("No direct dispatch found, checking all logs...");
+            await showDispatchFromAllLogs(incidentId);
+          }
+
+          // Restore button
+          button.innerHTML = originalText;
+          button.disabled = false;
+        } catch (error) {
+          console.error("Error in showDispatchStatus:", error);
+
+          // Show detailed error message
+          const errorMsg =
+            `❌ Unable to load dispatch information.\n\n` +
+            `Error: ${error.message}\n\n` +
+            `Troubleshooting:\n` +
+            `• Check if Flask server is running on port 5000\n` +
+            `• Verify database connection\n` +
+            `• Check browser console for more details\n\n` +
+            `Try refreshing the page and check the Dispatch Log section manually.`;
+
+          alert(errorMsg);
+
+          // Restore button
+          if (event && event.target) {
+            event.target.innerHTML = "✅ View Auto-Dispatch";
+            event.target.disabled = false;
+          }
+        }
+      }
+
+      // Fallback method to check all dispatch logs
+      async function showDispatchFromAllLogs(incidentId) {
+        try {
+          const response = await fetch(`${API_BASE}/dispatch_log`);
+          const data = await response.json();
+
+          if (response.ok && data.dispatch_logs) {
+            const dispatch = data.dispatch_logs.find(
+              (log) => log.incident_id === incidentId,
+            );
+
+            if (dispatch) {
+              showDispatchModal(dispatch);
+            } else {
+              alert(
+                "❌ No auto-dispatch record found for this incident.\n\n" +
+                  "This could mean:\n" +
+                  "• No hospitals had available beds when reported\n" +
+                  "• Auto-dispatch failed due to system error\n" +
+                  "• Incident was manually processed\n\n" +
+                  'Check the "Ambulance Dispatch Log" section below for all dispatches.',
+              );
+            }
+          } else {
+            throw new Error("Failed to load dispatch logs");
+          }
+        } catch (error) {
+          throw new Error(`Fallback method also failed: ${error.message}`);
+        }
+      }
+
+      // Show dispatch information in a modal
+      function showDispatchModal(dispatch) {
+        // Create modal element
+        const modal = document.createElement("div");
+        modal.className = "dispatch-modal";
+        modal.innerHTML = `
+                <div class="modal-overlay" onclick="closeDispatchModal()"></div>
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>🚑 Auto-Dispatch Details</h2>
+                        <button class="close-btn" onclick="closeDispatchModal()">×</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="dispatch-info">
+                            <div class="info-row">
+                                <strong>🚨 Incident ID:</strong> #${dispatch.incident_id}
+                            </div>
+                            <div class="info-row">
+                                <strong>📍 Incident Location:</strong> ${dispatch.incident_location}
+                            </div>
+                            <div class="info-row">
+                                <strong>⚠️ Severity:</strong> 
+                                <span class="status severity-${dispatch.severity.toLowerCase()}">${dispatch.severity}</span>
+                            </div>
+                            <div class="info-row">
+                                <strong>🏥 Dispatched To:</strong> ${dispatch.hospital_name}
+                            </div>
+                            <div class="info-row">
+                                <strong>📍 Hospital Location:</strong> ${dispatch.hospital_location}
+                            </div>
+                            <div class="info-row">
+                                <strong>🕐 Dispatch Time:</strong> ${new Date(dispatch.dispatch_time).toLocaleString()}
+                            </div>
+                            <div class="info-row">
+                                <strong>📋 Dispatch ID:</strong> #${dispatch.log_id}
+                            </div>
+                            <div class="info-row">
+                                <strong>✅ Status:</strong> 
+                                <span class="status auto-dispatch">AUTOMATICALLY DISPATCHED</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" onclick="closeDispatchModal()">Close</button>
+                    </div>
+                </div>
+            `;
+
+        document.body.appendChild(modal);
+      }
+
+      // Close dispatch modal
+      function closeDispatchModal() {
+        const modal = document.querySelector(".dispatch-modal");
+        if (modal) {
+          modal.remove();
+        }
+      }
+    </script>
+  </body>
+</html>

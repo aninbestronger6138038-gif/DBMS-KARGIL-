@@ -1,0 +1,435 @@
+{% comment %} <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Smart City Management System</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 30px;
+        padding: 50px 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 450px;
+        width: 100%;
+        animation: slideUp 0.5s ease-out;
+      }
+
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo h1 {
+        color: #667eea;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+      }
+
+      .logo p {
+        color: #666;
+        font-size: 1.1em;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 8px;
+        color: #333;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px 20px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-2px);
+      }
+
+      .btn {
+        width: 100%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .alert {
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-weight: 500;
+        display: none;
+      }
+
+      .alert-error {
+        background: #f8d7da;
+        border: 1px solid #f5c6cb;
+        color: #721c24;
+      }
+
+      .alert-success {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+      }
+
+      .role-selector {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      .role-btn {
+        flex: 1;
+        padding: 12px;
+        border: 2px solid #e1e5e9;
+        border-radius: 12px;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        color: #666;
+      }
+
+      .role-btn.active {
+        border-color: #667eea;
+        background: linear-gradient(
+          135deg,
+          rgba(102, 126, 234, 0.1),
+          rgba(118, 75, 162, 0.1)
+        );
+        color: #667eea;
+      }
+
+      .demo-credentials {
+        margin-top: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9ff, #ffffff);
+        border-radius: 12px;
+        border-left: 4px solid #667eea;
+      }
+
+      .demo-credentials h3 {
+        color: #667eea;
+        font-size: 1.1em;
+        margin-bottom: 15px;
+      }
+
+      .cred-item {
+        background: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #e1e5e9;
+      }
+
+      .cred-item strong {
+        color: #333;
+      }
+
+      .cred-item code {
+        background: #f0f0f0;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+        color: #667eea;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid #f3f3f3;
+        border-top: 3px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .register-link {
+        text-align: center;
+        margin-top: 20px;
+        color: #666;
+      }
+
+      .register-link a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .register-link a:hover {
+        text-decoration: underline;
+      }
+
+      @media (max-width: 768px) {
+        .login-container {
+          padding: 30px 25px;
+        }
+
+        .logo h1 {
+          font-size: 2em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="logo">
+        <h1>🏙️ Smart City</h1>
+        <p>Management System</p>
+      </div>
+
+      <div id="alertBox" class="alert"></div>
+
+      <div class="role-selector">
+        <button class="role-btn active" onclick="selectRole('user')">
+          👤 Citizen
+        </button>
+        <button class="role-btn" onclick="selectRole('operator')">
+          👮 Operator
+        </button>
+        <button class="role-btn" onclick="selectRole('admin')">👨‍💼 Admin</button>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label for="username">Username or Email</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            autocomplete="username"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+
+        <button type="submit" class="btn" id="loginBtn">
+          <span id="loginBtnText">Login</span>
+        </button>
+      </form>
+
+      <div class="demo-credentials">
+        <h3>📝 Demo Credentials</h3>
+        <div class="cred-item">
+          <strong>Admin:</strong> <code>admin</code> / <code>admin123</code>
+        </div>
+        <div class="cred-item">
+          <strong>Operator:</strong> <code>operator1</code> /
+          <code>admin123</code>
+        </div>
+        <div class="cred-item">
+          <strong>Citizen:</strong> <code>citizen1</code> /
+          <code>admin123</code>
+        </div>
+      </div>
+
+      <div class="register-link">
+        Don't have an account? <a href="/register.html">Register here</a>
+      </div>
+    </div>
+
+    <script>
+      const API_BASE = "/api";
+      let selectedRole = "user";
+
+      // Select role and fill credentials
+      function selectRole(role) {
+        selectedRole = role;
+
+        // Update button states
+        document.querySelectorAll(".role-btn").forEach((btn) => {
+          btn.classList.remove("active");
+        });
+        event.target.classList.add("active");
+
+        // Auto-fill credentials for demo
+        const credentials = {
+          user: { username: "citizen1", password: "admin123" },
+          operator: { username: "operator1", password: "admin123" },
+          admin: { username: "admin", password: "admin123" },
+        };
+
+        document.getElementById("username").value = credentials[role].username;
+        document.getElementById("password").value = credentials[role].password;
+      }
+
+      // Show alert message
+      function showAlert(message, type = "error") {
+        const alertBox = document.getElementById("alertBox");
+        alertBox.className = `alert alert-${type}`;
+        alertBox.textContent = message;
+        alertBox.style.display = "block";
+
+        setTimeout(() => {
+          alertBox.style.display = "none";
+        }, 5000);
+      }
+
+      // Handle login form submission
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+        const loginBtn = document.getElementById("loginBtn");
+        const loginBtnText = document.getElementById("loginBtnText");
+
+        // Show loading state
+        loginBtn.disabled = true;
+        loginBtnText.innerHTML = '<span class="loading"></span> Logging in...';
+
+        try {
+          const response = await fetch(`${API_BASE}/auth/login`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify({
+              username: username,
+              password: password,
+            }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            showAlert(`Welcome back, ${data.user.full_name}!`, "success");
+
+            // Redirect to dashboard after 1 second
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 1000);
+          } else {
+            showAlert(data.error || "Login failed. Please try again.", "error");
+            loginBtn.disabled = false;
+            loginBtnText.textContent = "Login";
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+          showAlert("Network error. Please check your connection.", "error");
+          loginBtn.disabled = false;
+          loginBtnText.textContent = "Login";
+        }
+      }
+
+      // Check if user is already logged in
+      async function checkSession() {
+        try {
+          const response = await fetch(`${API_BASE}/auth/session`, {
+            credentials: "include",
+          });
+
+          const data = await response.json();
+
+          if (data.authenticated) {
+            // User already logged in, redirect to dashboard
+            window.location.href = "/";
+          }
+        } catch (error) {
+          console.error("Session check error:", error);
+        }
+      }
+
+      // Initialize on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        checkSession();
+        // Pre-select citizen role
+        selectRole("user");
+      });
+
+      // Handle Enter key
+      document
+        .getElementById("password")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            handleLogin(event);
+          }
+        });
+    </script>
+  </body>
+</html>
+{% endcomment %}
